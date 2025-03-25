@@ -23,6 +23,11 @@ body {
     font-family: var(--fuentePrincipal);
 }
 
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .contenedor {
     max-width: 1200px;
     width: 95%;
@@ -32,7 +37,7 @@ body {
 
 /* HEADER */
 .header {
-    height: 300px;
+    height: 360px;
     background-image: url('../img/fondo_header.jpg');
     background-position: top center;
     background-size: cover;
@@ -48,6 +53,40 @@ body {
     width: 100%;
     height: 100%;
     background: linear-gradient(rgba(0, 55, 37, .7) 60%, rgb(0, 223, 132, .4));
+}
+
+.menu-mobile {
+    padding: 5px 0;
+}
+
+.menu-mobile img {
+    height: 32px;
+    width: 32px;
+}
+
+@media (min-width: 768px) {
+    .menu-mobile {
+        display: none;
+    }
+}
+
+.header__navegacion {
+    visibility: hidden;
+    height: 0;
+    opacity: 0;
+    transition: height .5s linear, opacity .5s ease-in-out;
+}
+
+/*
+IDENTIFICA EL TIPO Y TAMAÑO DE DISPOSITIVO
+*/
+
+@media (min-width: 768px){
+    .header .header__navegacion {
+        visibility: visible;
+        height: auto;
+        opacity: 1;
+    }
 }
 
 .header__nav {
@@ -82,4 +121,33 @@ body {
     color: #FFF;
     max-width: 400px;
     font-family: var(--fuenteSecundaria);
+}
+
+.mostrar {
+    visibility: visible;
+    height: auto;
+    opacity: 1;
+}
+
+/*SERVICIOS*/
+
+.servicios__contenido {
+    margin-top: 15px;
+}
+
+@media (min-width: 768px){
+    .servicios__contenido {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+    }
+}
+
+.servicio {
+    margin-bottom: 20px;
+}
+
+.servicio__img img {
+    border-radius: 15px;
+    box-shadow: 0 0 2px 0 #009659;
 }
