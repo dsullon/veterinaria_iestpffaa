@@ -130,6 +130,12 @@ IDENTIFICA EL TIPO Y TAMAÑO DE DISPOSITIVO
     opacity: 1;
 }
 
+.error {
+    background-color: red;
+    color: #FFF;
+    padding: 10px 5px;
+}
+
 /*SERVICIOS*/
 
 .servicios__contenido {
