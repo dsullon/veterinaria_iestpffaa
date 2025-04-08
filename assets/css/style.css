@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
 :root {
-    --fuentePrincipal: "Montserrat", sans-serif;;
-    --fuenteSecundaria: "Lato", sans-serif;;
+    --fuentePrincipal: "Montserrat", sans-serif;
+    --fuenteSecundaria: "Lato", sans-serif;
+    --colorPrincipal: #009659;
 }
 
 
@@ -150,4 +151,25 @@ IDENTIFICA EL TIPO Y TAMAÑO DE DISPOSITIVO
 .servicio__img img {
     border-radius: 15px;
     box-shadow: 0 0 2px 0 #009659;
+}
+
+/*Footer*/
+.footer {
+    background-color: var(--colorPrincipal);
+    color: #FFF;
+}
+
+.footer__contenido {
+    display: flex;
+    align-items: center;
+}
+
+.footer__contenido p {
+    padding: 10px 0;
+    text-align: center;
+    width: 100%;
+}
+
+.footer__contenido p span {
+    display: block;
 }
