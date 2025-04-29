@@ -1,0 +1,12 @@
+{
+    "name": "dsullon/veterinaria",
+    "description": "Proyecto Veterinaria del curso de PI del IESTPFFAA",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Alex Sullon",
+            "email": "soporte@gradmi.pe"
+        }
+    ],
+    "require": {}
+}
