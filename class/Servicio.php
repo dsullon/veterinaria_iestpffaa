@@ -8,6 +8,7 @@ class Servicio {
     private $db;
 
     public function __construct($args = []) {
+        $this->id = $args["id"] ?? null;
         $this->nombre = $args["nombre"] ?? '';
         $this->descripcion = $args["descripcion"] ?? '';
         $this->imagen = $args["imagen"] ?? 'ND';
@@ -41,8 +42,9 @@ class Servicio {
         $query = "SELECT * FROM servicios WHERE id = :id";
         $stm = $this->db->prepare($query);
         $stm->execute([':id' => $id]);
-        $resultado = $stm->fetch(PDO::FETCH_OBJ);
-        return $resultado;
+        $resultado = $stm->fetch(PDO::FETCH_ASSOC);
+        
+        return new self($resultado);
     }
 
     public function save(){
@@ -65,7 +67,6 @@ class Servicio {
             ':descripcion' => $this->descripcion,
             ':imagen' => $this->imagen
         ];
-        print_r($params);
         $stm->execute($params);
     }
 

@@ -6,17 +6,11 @@
     $servicios = $servicio->all();
 
 
-    $servicioA = $servicio->find(3);
 
-    $servicioNuevo = new Servicio([
-        "nombre" => "Guardería",
-        "descripcion" => "Servicio de guardería de mascotas"
-    ]);
-    $servicioNuevo->setDB($db);
-    $servicioNuevo->save();
-    echo "<pre>";
-    var_dump($servicioNuevo);
-    echo "</pre>";
+    $servicioA = $servicio->find(4);
+    $servicioA->setDB($db);
+    $servicioA->nombre = "Guarda Pets v1.1";
+    $servicioA->save();
 ?>
 <?php include_once 'templates/_header.php' ?>
 <main class="contenedor">
