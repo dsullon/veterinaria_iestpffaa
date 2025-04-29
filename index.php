@@ -1,69 +1,22 @@
 <?php
-    ini_set('display_errors', '1');
-    /*require   El archivo es necesario para el funcionamiento (FATAL ERROR)
-    include  El archivo no es determinante */
+    require_once 'includes/database.php';
     require_once 'class/Servicio.php';
-    // Servidor, Usuario, Password, Base Datos
-    // Retorna: Valor Falso: En caso exista error en conexión | Mysqli: contiene información de la conexión
-    $servicios = [];
-
-    // mysqli soporta el estilo procedimental y orientado a objetos
-    $db = new mysqli('localhost', 'iestpffaa', '123456', 'veterinaria');
-    $query = "SELECT * FROM servicios";
-    // Ejecuta una instrucción SQL y devuelve un resultado según el tipo de sentencia SQL
-    $resultado = mysqli_query($db, $query);
-    // Mientras exista datos, trae los datos en formato de objeto y lo asigna a la variable Servicio
-    while($servicio = $resultado->fetch_object()){
-        // Asigna la variable servicio al final del arreglo Servicios
-        $servicios[] = $servicio;
-    }
-
-    /* UTILIZANDO SENTENCIAS PREPARADAS
-        1. Objeto con informacion de la conexion (Ok)
-        2. Sentencia SQL (Ok)
-        3. Llamamos al metodo prepare() de la conexión y lo asignamos a un statement (Ok)
-        4. Si existe algun parámetro llamamos a bind_param() del objeto statement (-)
-        5. Ejecutamos a través del statement llamar al método execute() (Ok)
-        6. Obtenemos los resultados de la ejecucion a través del método get_result()
-    */
-
-    $id = 2;
-
-    $query = "SELECT * FROM servicios WHERE id = ?";
-    $statement = $db->prepare($query);
-    $statement->bind_param('i', $id);
-    $statement->execute();
-    $resultado = $statement->get_result();
-
-    echo "Utilizando sentencias preparadas". PHP_EOL;
-
-    // Uso de PDO (Php Data Object)
-    // Soporte al estilo Orientado a Objetos
-
-    $dbPDO = new PDO("mysql:host=localhost;dbname=veterinaria", 'iestpffaa', '123456');
-    $query = "SELECT * FROM servicios";
-    $statementPDO = $dbPDO->prepare($query);
-    $statementPDO->execute();
-    $resultado = $statementPDO->fetchAll(PDO::FETCH_OBJ);
-
-    $id = 3;
-    $query = "SELECT * FROM servicios WHERE id = :idServicio";
-    $statementPDO = $dbPDO->prepare($query);
-    $statementPDO->bindParam(":idServicio", $id);
-    $statementPDO->execute();
-    $resultado = $statementPDO->fetch(PDO::FETCH_OBJ);
+    $servicio = new Servicio();
+    $servicio->setDB($db);
+    $servicios = $servicio->all();
 
 
-    $services = Servicio::find($id);
+    $servicioA = $servicio->find(3);
+
+    $servicioNuevo = new Servicio([
+        "nombre" => "Guardería",
+        "descripcion" => "Servicio de guardería de mascotas"
+    ]);
+    $servicioNuevo->setDB($db);
+    $servicioNuevo->save();
     echo "<pre>";
-    print_r($services);
+    var_dump($servicioNuevo);
     echo "</pre>";
-
-
-
-
-
-   
 ?>
 <?php include_once 'templates/_header.php' ?>
 <main class="contenedor">

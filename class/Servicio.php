@@ -1,13 +1,20 @@
 <?php 
 class Servicio {
+    public $id;
     public $nombre;
     public $descripcion;
     public $imagen;
 
+    private $db;
+
     public function __construct($args = []) {
         $this->nombre = $args["nombre"] ?? '';
         $this->descripcion = $args["descripcion"] ?? '';
-        $this->imagen = $args["imagen"] ?? '';
+        $this->imagen = $args["imagen"] ?? 'ND';
+    }
+
+    public function setDB($database){
+        $this->db = $database;
     }
 
     public function validar(){
@@ -22,23 +29,43 @@ class Servicio {
         return $alertas;
     }
 
-    public function guardar(){
-        $sql = "INSERT INTO servicios(nombre, descripcion)
-                VALUES('{$this->nombre}', '{$this->descripcion}')";
-        echo $sql;
+    public function all(){
+        $query = "SELECT * FROM servicios";
+        $stm = $this->db->prepare($query);
+        $stm->execute();
+        $resultado = $stm->fetchAll(PDO::FETCH_OBJ);
+        return $resultado;
     }
 
-    public static function find(int $id) {
-        $dbPDO = new PDO("mysql:host=localhost;dbname=veterinaria", 'iestpffaa', '123456');
-        $query = "SELECT * FROM servicios WHERE id = :idServicio";
-        $statementPDO = $dbPDO->prepare($query);
-        $statementPDO->bindParam(":idServicio", $id);
-        $statementPDO->execute();
-        $resultado = $statementPDO->fetch(PDO::FETCH_ASSOC);
-        if($resultado){
-            $servicio = new Servicio($resultado);
-            return $servicio;
+    public function find(int $id){
+        $query = "SELECT * FROM servicios WHERE id = :id";
+        $stm = $this->db->prepare($query);
+        $stm->execute([':id' => $id]);
+        $resultado = $stm->fetch(PDO::FETCH_OBJ);
+        return $resultado;
+    }
+
+    public function save(){
+        echo $this->id;
+        if(!is_null($this->id)){
+            // TODO: Actualizar 
+            $this->update();
+        } else {
+            // TODO: Crear
+            $this->create();
         }
-        return null;
+    }
+
+    private function create(){
+        $query = "INSERT INTO servicios(nombre, descripcion, imagen)
+                VALUES(':nombre', ':descripcion', ':imagen')";
+        $stm = $this->db->prepare($query);
+        $params = [':nombre' => $this->nombre, ':descripcion' => $this->descripcion,':imagen' => $this->imagen];
+        print_r($params);
+        $stm->execute($params);
+    }
+
+    private function update(){
+
     }
 }
