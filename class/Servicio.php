@@ -58,14 +58,24 @@ class Servicio {
 
     private function create(){
         $query = "INSERT INTO servicios(nombre, descripcion, imagen)
-                VALUES(':nombre', ':descripcion', ':imagen')";
+                VALUES(:nombre, :descripcion, :imagen)";
         $stm = $this->db->prepare($query);
-        $params = [':nombre' => $this->nombre, ':descripcion' => $this->descripcion,':imagen' => $this->imagen];
+        $params = [
+            ':nombre' => $this->nombre, 
+            ':descripcion' => $this->descripcion,
+            ':imagen' => $this->imagen
+        ];
         print_r($params);
         $stm->execute($params);
     }
 
     private function update(){
-
+        $query = "UPDATE servicios 
+                SET nombre = :nombre, descripcion = :descripcion,
+                    imagen = :imagen
+                WHERE id = :id";
+        $stm = $this->db->prepare($query);
+        $stm->execute([':nombre' => $this->nombre, ':descripcion' => $this->descripcion, 
+                        ':imagen' => $this->imagen, ':id' => $this->id]);
     }
 }
